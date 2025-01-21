@@ -156,6 +156,7 @@ let centerHorz, centerVert;
 let i = 0;
 let time = 0;
 let lineArr = [];
+let currentTurn = 0;
 let currentRound = 0;
 let roundCubes = [
   {
@@ -280,28 +281,24 @@ function setup() {
   
 }
 function reset_board(){
-  currentRound = slider.value();
+  currentTurn = slider.value();
   clear();
-  fill('black');
-  strokeWeight(3);
-  stroke(0,0,0);
   background(100);
-  textSize(50);
-  text(round + 1, 50,50)
-  noFill();
+  
 
   for (const key in factiondict){
     factiondict[key].reset_resources();
   }
 
-  for (let i = 0; i < currentRound; i++){
+  for (let i = 0; i < currentTurn; i++){
     if (typeof lineArr[i] == "number"){
-      print('yes');
+      //print('yes');
+      currentRound = lineArr[i];
       for(const key in factiondict){
         if (key == 'eat'){
           continue;
         }
-        print(roundCubes[lineArr[i]][key]);
+        //print(roundCubes[lineArr[i]][key]);
         set_faction_inventory(key, roundCubes[lineArr[i]][key]);
       }
       continue;
@@ -309,6 +306,14 @@ function reset_board(){
     lineArr[i].draw();
     lineArr[i].transfer_resources();
   }
+  fill('black');
+  strokeWeight(2);
+  stroke(0,0,0);
+  
+  textSize(50);
+  text(currentRound + 1, 50,50);
+  noFill();
+  
 
   for (const key in factiondict){
     factiondict[key].draw_faction_inventory()
