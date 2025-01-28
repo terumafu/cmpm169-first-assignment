@@ -8,6 +8,7 @@
 // In a longer project I like to put these in a separate file
 
 // define a class
+
 class MyProjectClass {
   // constructor function
   constructor(param1, param2) {

@@ -7,24 +7,14 @@
 
 // Constants - User-servicable parts
 // In a longer project I like to put these in a separate file
-const VALUE1 = 1;
-const VALUE2 = 2;
+
 
 // Globals
+
 let myInstance;
 let canvasContainer;
 var centerHorz, centerVert;
-
-class MyClass {
-    constructor(param1, param2) {
-        this.property1 = param1;
-        this.property2 = param2;
-    }
-
-    myMethod() {
-        // code to run when method is called
-    }
-}
+let bug, worm, egg;
 
 function resizeScreen() {
   centerHorz = canvasContainer.width() / 2; // Adjusted for drawing logic
@@ -42,38 +32,84 @@ function setup() {
   canvas.parent("canvas-container");
   // resize canvas is the page is resized
 
-  // create an instance of the class
-  myInstance = new MyClass("VALUE1", "VALUE2");
-
+  angleMode(DEGREES);
+  noFill();
+  
+  
+  bug = new Bug(100,100,5);
+  worm = new Worm(0,0,5,20,0);
+  worm.create_worm();
   $(window).resize(function() {
     resizeScreen();
   });
   resizeScreen();
+  background(100);
+ 
 }
-
+let timer = 0;
+let eggtimer = 0;
+let timepassed = 0;
 // draw() function is called repeatedly, it's the main animation loop
 function draw() {
-  background(220);    
-  // call a method on the instance
-  myInstance.myMethod();
+  
+  if (true){
+    timer += deltaTime
+    if (timer >= 1000){
+      if (worm != null){
+        worm.grow();
+        timer = 0;
+        print(worm.get_age())
+        
+        if (worm.get_age() >= 35){
+          egg = new Egg(worm.get_x_y()[0],worm.get_x_y()[1]);
+          worm = null;
+        }
+      }
+      if (egg != null){
+        eggtimer += 1;
+        print("egg tick")
+        if (eggtimer >= 5){
+          worm = egg.hatch_worm();
+          eggtimer = 0;
+          egg = null;
+        }
+        timer = 0;
+      }
+    }
+    //background(100)
+    strokeWeight(10)
+    //point(bug.x,bug.y);
+    strokeWeight(2)
+    bug.run(20,canvasContainer.width() - 20, canvasContainer.height() - 20);
+    if (worm != null){
+      //print(worm.nodeArr)
+      worm.follow(bug.x,bug.y)
+      //worm.follow(mouseX,mouseY)
+      //print(worm.nodeArr)
+      worm.draw_circles(true)
+      worm.draw_curve(360 * sin(timepassed/1000));
+    }
+    if (egg != null){
+      strokeWeight(5)
+      egg.draw_egg();
+    }
+    else{
+      timepassed += deltaTime;
+    }
 
-  // Set up rotation for the rectangle
-  push(); // Save the current drawing context
-  translate(centerHorz, centerVert); // Move the origin to the rectangle's center
-  rotate(frameCount / 100.0); // Rotate by frameCount to animate the rotation
-  fill(234, 31, 81);
-  noStroke();
-  rect(-125, -125, 250, 250); // Draw the rectangle centered on the new origin
-  pop(); // Restore the original drawing context
-
-  // The text is not affected by the translate and rotate
-  fill(255);
-  textStyle(BOLD);
-  textSize(140);
-  text("p5*", centerHorz - 105, centerVert + 40);
+    
+  }
 }
 
 // mousePressed() function is called once after every time a mouse button is pressed
 function mousePressed() {
+  //worm.grow()
     // code to run when mouse is pressed
+    if (false){
+  let lastnode = nodeArr[nodeArr.length-1];
+  let temp =new Node(lastnode.x,lastnode.y,10,null,lastnode.direction);
+  print(lastnode.x)
+  nodeArr[nodeArr.length-1].setNextNode(temp);
+  nodeArr.push(temp);
+    }
 }
