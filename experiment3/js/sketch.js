@@ -43,7 +43,7 @@ function setup() {
     resizeScreen();
   });
   resizeScreen();
-  background(100);
+  background(0);
  
 }
 let timer = 0;
@@ -86,7 +86,7 @@ function draw() {
       worm.follow(bug.x,bug.y)
       //worm.follow(mouseX,mouseY)
       //print(worm.nodeArr)
-      worm.draw_circles(true)
+      worm.draw_circles(false)
       worm.draw_curve(360 * sin(timepassed/1000));
     }
     if (egg != null){

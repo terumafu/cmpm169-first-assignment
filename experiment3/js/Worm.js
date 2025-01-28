@@ -110,7 +110,7 @@ class Worm{
         //go through leftarrr, reverse rightarr
         
         colorMode(HSL);
-        stroke(hue,50,this.color[2]);
+        stroke(hue,this.color[1],this.color[2]);
         //fill(this.color[0],this.color[1],this.color[2]);
         fill(hue,this.color[1],this.color[2])
         this.rightPoints.reverse();
