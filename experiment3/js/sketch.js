@@ -76,7 +76,7 @@ function draw() {
         timer = 0;
       }
     }
-    //background(100)
+    //background(0)
     strokeWeight(10)
     //point(bug.x,bug.y);
     strokeWeight(2)
