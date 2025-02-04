@@ -51,7 +51,7 @@ let eggtimer = 0;
 let timepassed = 0;
 // draw() function is called repeatedly, it's the main animation loop
 function draw() {
-  
+  //background(0,0,0,10);
   if (true){
     timer += deltaTime
     if (timer >= 1000){
@@ -87,7 +87,9 @@ function draw() {
       //worm.follow(mouseX,mouseY)
       //print(worm.nodeArr)
       worm.draw_circles(false)
-      worm.draw_curve(360 * sin(timepassed/1000));
+      worm.draw_curve(timepassed/100 % 360 );
+      
+      //print(timepassed)
     }
     if (egg != null){
       strokeWeight(5)
@@ -95,6 +97,10 @@ function draw() {
     }
     else{
       timepassed += deltaTime;
+      if (Math.abs(timepassed / 100 - 360) <= 0.1){
+        timepassed = 0;
+      } 
+      print(timepassed/100)
     }
 
     
