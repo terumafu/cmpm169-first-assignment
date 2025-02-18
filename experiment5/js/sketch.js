@@ -113,7 +113,7 @@ function draw() {
   }
   lights();
   background(0);
-  orbitControl();
+  //tControl();
   // Place the camera at the top-right.
   //cam.setPosition();
   //normalMaterial();
